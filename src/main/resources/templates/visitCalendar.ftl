@@ -7,6 +7,20 @@
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
     <style>
+        .navigation {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        th:first-of-type {
+            width: 70px;
+        }
+
         .visit-form {
             opacity: 0;
         }
@@ -20,20 +34,24 @@
 <body>
 
 <div class="container">
-    <div class="row">
-        <h1>
+    <div class="row navigation">
+        <h1 class="col-3">
             <a href="/previous">Previous</a>
+        </h1>
+        <h1 class="col-6 text-center">
         ${visitCalendar.currentWeek.start} - ${visitCalendar.currentWeek.end}
+        </h1>
+        <h1 class="col-3 text-right">
             <a href="/next">Next</a>
         </h1>
     </div>
     <div class="row">
-        <table class="table">
+        <table class="table table-sm table-striped table-bordered">
             <thead class="thead-inverse">
             <tr>
                 <th></th>
             <#list visitCalendar.openDays as day>
-                <th>${day}</th>
+                <th class="text-center">${day}</th>
             </#list>
             </tr>
             </thead>
@@ -49,6 +67,9 @@
                             <div>${visit.petNames?join(", ")}</div>
                         <#else>
                             <div class="visit-form">
+                                <div class="click-to-add text-center">
+                                    Click to add
+                                </div>
                                 <form method="post">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="owner" placeholder="Owner">
@@ -80,6 +101,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
+
+<script>
+$("form").hide();
+
+$(document).click(function(event) {
+    $( "form" ).hide();
+    $( ".click-to-add" ).show();
+    if($(event.target).closest(".visit-form").length) {
+        var formContainer = $(event.target).closest('.visit-form');
+        $( "form", formContainer ).show();
+        $( ".click-to-add", formContainer ).hide();
+    }
+})
+</script>
 
 </body>
 
