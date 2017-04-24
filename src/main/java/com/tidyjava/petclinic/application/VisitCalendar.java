@@ -21,6 +21,10 @@ import static java.util.Arrays.asList;
 @Service
 @SessionScope
 public class VisitCalendar {
+    private static final List<DayOfWeek> OPEN_DAYS = asList(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY);
+    private static final LocalTime OPEN_TIME = LocalTime.of(8, 0);
+    private static final LocalTime CLOSE_TIME = LocalTime.of(18, 0);
+    private static final int VISIT_DURATION = 30;
 
     private Week currentWeek;
     private Visits visits;
@@ -35,12 +39,12 @@ public class VisitCalendar {
     }
 
     public List<DayOfWeek> getOpenDays() {
-        return asList(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY);
+        return OPEN_DAYS;
     }
 
     public List<LocalTime> getVisitTimes() {
         List<LocalTime> visitTimes = new ArrayList<>();
-        for (LocalTime time = LocalTime.of(8, 0); time.isBefore(LocalTime.of(18, 0)); time = time.plusMinutes(30)) {
+        for (LocalTime time = OPEN_TIME; time.isBefore(CLOSE_TIME); time = time.plusMinutes(VISIT_DURATION)) {
             visitTimes.add(time);
         }
         return visitTimes;

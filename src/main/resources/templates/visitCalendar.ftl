@@ -31,7 +31,7 @@
         <table class="table">
             <thead class="thead-inverse">
             <tr>
-                <th>TIME \ DAY</th>
+                <th></th>
             <#list visitCalendar.openDays as day>
                 <th>${day}</th>
             </#list>
